@@ -1,0 +1,10 @@
+{
+  "name": "@kodnestcareers/module-job-tracker",
+  "version": "0.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "echo \"Build job tracker module here\"",
+    "test": "echo \"Test job tracker module here\""
+  }
+}

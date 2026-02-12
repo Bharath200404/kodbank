@@ -1,0 +1,11 @@
+{
+  "name": "@kodnestcareers/worker",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "echo \"Start worker process here\"",
+    "build": "echo \"Build worker here\"",
+    "lint": "echo \"Lint worker here\"",
+    "test": "echo \"Test worker here\""
+  }
+}

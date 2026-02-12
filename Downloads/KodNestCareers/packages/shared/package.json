@@ -1,0 +1,10 @@
+{
+  "name": "@kodnestcareers/shared",
+  "version": "0.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "echo \"Build shared package here\"",
+    "test": "echo \"Test shared package here\""
+  }
+}

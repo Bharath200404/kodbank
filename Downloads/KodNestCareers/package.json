@@ -1,0 +1,15 @@
+{
+  "name": "kodnestcareers-monorepo",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev:web": "pnpm --filter @kodnestcareers/web dev",
+    "dev:worker": "pnpm --filter @kodnestcareers/worker dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "format": "turbo run format"
+  },
+  "devDependencies": {},
+  "packageManager": "pnpm@9.0.0"
+}

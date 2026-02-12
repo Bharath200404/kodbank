@@ -1,0 +1,10 @@
+{
+  "name": "@kodnestcareers/module-resume",
+  "version": "0.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "echo \"Build resume module here\"",
+    "test": "echo \"Test resume module here\""
+  }
+}

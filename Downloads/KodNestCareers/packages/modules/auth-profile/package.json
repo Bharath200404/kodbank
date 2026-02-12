@@ -1,0 +1,10 @@
+{
+  "name": "@kodnestcareers/module-auth-profile",
+  "version": "0.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "echo \"Build auth profile module here\"",
+    "test": "echo \"Test auth profile module here\""
+  }
+}

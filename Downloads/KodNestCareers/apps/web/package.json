@@ -1,0 +1,11 @@
+{
+  "name": "@kodnestcareers/web",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "echo \"Start Next.js dev server here\"",
+    "build": "echo \"Build web app here\"",
+    "lint": "echo \"Lint web app here\"",
+    "test": "echo \"Test web app here\""
+  }
+}

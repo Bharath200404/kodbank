@@ -1,0 +1,10 @@
+{
+  "name": "@kodnestcareers/events",
+  "version": "0.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "echo \"Build events package here\"",
+    "test": "echo \"Test events package here\""
+  }
+}

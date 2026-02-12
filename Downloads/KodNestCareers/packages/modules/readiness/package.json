@@ -1,0 +1,10 @@
+{
+  "name": "@kodnestcareers/module-readiness",
+  "version": "0.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "echo \"Build readiness module here\"",
+    "test": "echo \"Test readiness module here\""
+  }
+}

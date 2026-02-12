@@ -1,0 +1,10 @@
+{
+  "name": "@kodnestcareers/module-analytics",
+  "version": "0.0.0",
+  "private": true,
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "echo \"Build analytics module here\"",
+    "test": "echo \"Test analytics module here\""
+  }
+}

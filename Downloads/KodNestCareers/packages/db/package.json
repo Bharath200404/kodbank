@@ -1,0 +1,9 @@
+{
+  "name": "@kodnestcareers/db",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "generate": "echo \"Generate Prisma client here\"",
+    "migrate": "echo \"Run Prisma migrations here\""
+  }
+}

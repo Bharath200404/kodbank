@@ -1,0 +1,12 @@
+// Prisma schema for KodNestCareers will be defined here.
+// This is a placeholder to anchor the db package structure.
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
