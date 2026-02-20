@@ -1,0 +1,357 @@
+{% extends "base.html" %}
+
+{% block title %}Kodbank - Dashboard{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        background-color: #f5f7fa;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .dashboard-container {
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+    .welcome-card {
+        background: linear-gradient(135deg, #003366 0%, #0055a4 100%);
+        color: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        padding: 40px;
+        margin-bottom: 40px;
+        position: relative;
+        overflow: hidden;
+    }
+    .welcome-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 200px;
+        height: 200px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 50%;
+        transform: translate(50%, -50%);
+    }
+    .welcome-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+    .welcome-subtitle {
+        font-size: 1.2rem;
+        opacity: 0.9;
+        margin-bottom: 30px;
+    }
+    .balance-card {
+        background: linear-gradient(135deg, #0055a4 0%, #003366 100%);
+        color: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        padding: 40px;
+        margin-bottom: 30px;
+        position: relative;
+        overflow: hidden;
+    }
+    .balance-card::before {
+        content: "";
+        position: absolute;
+        top: -50px;
+        right: -50px;
+        width: 150px;
+        height: 150px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 50%;
+    }
+    .balance-card::after {
+        content: "";
+        position: absolute;
+        bottom: -30px;
+        left: -30px;
+        width: 100px;
+        height: 100px;
+        background: rgba(255,255,255,0.05);
+        border-radius: 50%;
+    }
+    .balance-title {
+        font-size: 1.8rem;
+        font-weight: 600;
+        margin-bottom: 30px;
+        position: relative;
+        z-index: 1;
+    }
+    .balance-amount {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin: 30px 0;
+        position: relative;
+        z-index: 1;
+    }
+    .btn-check-balance {
+        background-color: #28a745;
+        border-color: #28a745;
+        padding: 15px 40px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+    }
+    .btn-check-balance:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(40, 167, 69, 0.4);
+    }
+    .loading-spinner {
+        display: none;
+        width: 3rem;
+        height: 3rem;
+        border-width: 0.3rem;
+    }
+    .info-card {
+        background-color: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    .info-title {
+        color: #003366;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+    .info-text {
+        color: #666;
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+    .balance-display-animation {
+        animation: fadeIn 1s ease;
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    /* Enhanced confetti animation */
+    .confetti-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        z-index: 9999;
+        pointer-events: none;
+    }
+    .confetti {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        opacity: 0.8;
+    }
+    .confetti-paper {
+        position: absolute;
+        width: 15px;
+        height: 30px;
+        background-color: #f00;
+        opacity: 0.8;
+        transform-origin: center bottom;
+    }
+    @keyframes confetti-fall {
+        0% {
+            transform: translateY(-100vh) rotate(0deg);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(100vh) rotate(720deg);
+            opacity: 0;
+        }
+    }
+    @keyframes paper-fall {
+        0% {
+            transform: translateY(-100vh) rotate(0deg) scaleX(1);
+            opacity: 1;
+        }
+        50% {
+            transform: translateY(50vh) rotate(180deg) scaleX(0.8);
+        }
+        100% {
+            transform: translateY(100vh) rotate(360deg) scaleX(1);
+            opacity: 0;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container dashboard-container">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="welcome-card">
+                <h1 class="welcome-title">Welcome to Your Dashboard</h1>
+                <p class="welcome-subtitle">Manage your finances with confidence and security. Your digital banking experience starts here.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="balance-card">
+                <h3 class="balance-title">Your Account Balance</h3>
+                <div class="balance-amount" id="balance-display">
+                    <button id="check-balance-btn" class="btn btn-check-balance">Check Balance</button>
+                    <div class="loading-spinner spinner-border text-light" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="info-card">
+                <h4 class="info-title">Account Information</h4>
+                <p class="info-text">Your account has been created with an initial balance of ₹100,000.</p>
+                <p class="info-text">Click the "Check Balance" button to see your current account balance.</p>
+                <p class="info-text">For security reasons, your balance is only shown when you request it.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="info-card text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="#0055a4" class="bi bi-shield-check mb-3" viewBox="0 0 16 16">
+                    <path d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.287 2.233c.346.244.652.42.893.533.12.057.218.095.293.118a.55.55 0 0 0 .101.025.615.615 0 0 0 .1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.775 11.775 0 0 1-2.517 2.453 7.159 7.159 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7.158 7.158 0 0 1-1.048-.625 11.777 11.777 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 62.456 62.456 0 0 1 5.072.56z"/>
+                    <path d="M10.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"/>
+                </svg>
+                <h4 class="info-title">Secure Banking</h4>
+                <p class="info-text">Your financial information is protected with industry-leading security measures.</p>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="info-card text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="#0055a4" class="bi bi-clock-history mb-3" viewBox="0 0 16 16">
+                    <path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.325 1.541a6.994 6.994 0 0 0-.245-.512l.878-.531c.178.295.336.6.468.912l-.896.429a6.978 6.978 0 0 0-.205-.298zm-.496 1.439a6.99 6.99 0 0 0-.353-.448l.814-.58c.22.31.418.634.589.97l-.846.419a6.96 6.96 0 0 0-.204-.36zm-.674 1.229a7.01 7.01 0 0 0-.434-.376l.714-.699c.254.259.488.534.698.822l-.708.443a6.98 6.98 0 0 0-.27-.19zm-.778.88a7.016 7.016 0 0 0-.484-.29l.604-.797c.268.203.525.421.767.65l-.558.719a6.979 6.979 0 0 0-.329-.182zm-.78.533a6.988 6.988 0 0 0-.506-.197l.474-.88c.23.124.455.259.673.405l-.487.739a6.952 6.952 0 0 0-.154-.067z"/>
+                    <path d="M14 0a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12zm0 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/>
+                    <path d="M8 4a.5.5 0 0 1 .5.5v3.5h3.5a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5z"/>
+                </svg>
+                <h4 class="info-title">24/7 Access</h4>
+                <p class="info-text">Access your account anytime, anywhere through our secure online banking platform.</p>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="info-card text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="#0055a4" class="bi bi-phone mb-3" viewBox="0 0 16 16">
+                    <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"/>
+                    <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                </svg>
+                <h4 class="info-title">Mobile Banking</h4>
+                <p class="info-text">Manage your finances on the go with our secure mobile banking app.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.getElementById('check-balance-btn').addEventListener('click', function() {
+        const btn = this;
+        const spinner = document.querySelector('.loading-spinner');
+
+        // Show loading spinner briefly for effect
+        btn.style.display = 'none';
+        spinner.style.display = 'inline-block';
+
+        // Simulate loading for better UX
+        setTimeout(() => {
+            // Hide spinner
+            spinner.style.display = 'none';
+
+            // Display balance with animation (using a default value of 100000)
+            const balanceDisplay = document.getElementById('balance-display');
+            const balance = 100000;
+            balanceDisplay.innerHTML = `<div class="balance-display-animation">Your balance is: <span style="font-size: 4rem; color: #4CAF50;">₹${balance.toLocaleString('en-IN')}</span></div>`;
+
+            // Create enhanced confetti animation
+            createEnhancedConfetti();
+        }, 1500); // 1.5 second delay for effect
+    });
+
+    function createEnhancedConfetti() {
+        const container = document.getElementById('confetti-container');
+        container.style.display = 'block';
+
+        // Create confetti pieces and paper strips
+        const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', 
+                        '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4CAF50', 
+                        '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800'];
+
+        // Create confetti pieces
+        for (let i = 0; i < 50; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+
+            // Random position
+            confetti.style.left = Math.random() * 100 + '%';
+
+            // Random color
+            confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+            // Random size
+            const size = Math.random() * 10 + 5;
+            confetti.style.width = size + 'px';
+            confetti.style.height = size + 'px';
+
+            // Random animation duration
+            const duration = Math.random() * 3 + 2;
+            confetti.style.animation = `confetti-fall ${duration}s linear forwards`;
+
+            // Random delay
+            confetti.style.animationDelay = Math.random() * 0.5 + 's';
+
+            // Random shape (circle or square)
+            confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+
+            container.appendChild(confetti);
+        }
+
+        // Create paper strips
+        for (let i = 0; i < 30; i++) {
+            const paper = document.createElement('div');
+            paper.className = 'confetti-paper';
+
+            // Random position
+            paper.style.left = Math.random() * 100 + '%';
+
+            // Random color
+            paper.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+            // Random size
+            const width = Math.random() * 10 + 5;
+            const height = Math.random() * 20 + 15;
+            paper.style.width = width + 'px';
+            paper.style.height = height + 'px';
+
+            // Random animation duration
+            const duration = Math.random() * 4 + 3;
+            paper.style.animation = `paper-fall ${duration}s linear forwards`;
+
+            // Random delay
+            paper.style.animationDelay = Math.random() * 1 + 's';
+
+            container.appendChild(paper);
+        }
+
+        // Remove confetti after animation completes
+        setTimeout(() => {
+            container.innerHTML = '';
+            container.style.display = 'none';
+        }, 7000);
+    }
+</script>
+{% endblock %}
