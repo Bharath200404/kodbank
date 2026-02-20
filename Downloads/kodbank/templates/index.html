@@ -1,0 +1,359 @@
+{% extends "base.html" %}
+
+{% block title %}Kodbank - Home{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        background-color: #f5f7fa;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .navbar {
+        background-color: #003366;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .hero-section {
+        background: linear-gradient(135deg, #003366 0%, #0055a4 100%);
+        color: white;
+        padding: 120px 0 100px;
+        position: relative;
+        overflow: hidden;
+        margin-top: 80px;
+    }
+    .hero-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80') center center;
+        background-size: cover;
+        opacity: 0.1;
+        z-index: 0;
+    }
+    .hero-content {
+        position: relative;
+        z-index: 1;
+    }
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 25px;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    .hero-subtitle {
+        font-size: 1.4rem;
+        margin-bottom: 40px;
+        opacity: 0.95;
+        max-width: 600px;
+    }
+    .btn-hero {
+        padding: 15px 35px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+    }
+    .btn-hero-primary {
+        background-color: #ffffff;
+        color: #003366;
+        border: none;
+    }
+    .btn-hero-primary:hover {
+        background-color: #f0f0f0;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    .btn-hero-outline {
+        background-color: transparent;
+        color: white;
+        border: 2px solid white;
+    }
+    .btn-hero-outline:hover {
+        background-color: rgba(255,255,255,0.1);
+        transform: translateY(-3px);
+    }
+    .section-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #003366;
+        margin-bottom: 20px;
+        position: relative;
+        display: inline-block;
+    }
+    .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 80px;
+        height: 4px;
+        background-color: #0055a4;
+    }
+    .section-subtitle {
+        color: #666;
+        font-size: 1.1rem;
+        max-width: 700px;
+        margin: 0 auto 60px;
+    }
+    .feature-card {
+        border: none;
+        border-radius: 15px;
+        overflow: hidden;
+        transition: all 0.4s ease;
+        height: 100%;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        background-color: white;
+        margin-bottom: 30px;
+    }
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+    .feature-icon {
+        width: 80px;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(0, 85, 164, 0.1);
+        border-radius: 50%;
+        margin: 0 auto 25px;
+        color: #0055a4;
+        font-size: 2rem;
+    }
+    .feature-title {
+        font-size: 1.4rem;
+        font-weight: 600;
+        color: #003366;
+        margin-bottom: 15px;
+    }
+    .feature-text {
+        color: #666;
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+    .stats-section {
+        background-color: #003366;
+        color: white;
+        padding: 100px 0;
+        border-radius: 0 0 30px 30px;
+        margin-top: 60px;
+    }
+    .stat-card {
+        text-align: center;
+        padding: 20px;
+    }
+    .stat-number {
+        font-size: 3rem;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 10px;
+    }
+    .stat-label {
+        font-size: 1.1rem;
+        color: rgba(255,255,255,0.8);
+    }
+    .cta-section {
+        background: linear-gradient(135deg, #0055a4 0%, #003366 100%);
+        color: white;
+        padding: 100px 0;
+        text-align: center;
+        margin-top: 0;
+        border-radius: 30px 30px 0 0;
+    }
+    .cta-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+    .cta-text {
+        font-size: 1.2rem;
+        margin-bottom: 40px;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .btn-cta {
+        padding: 15px 40px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        margin: 0 10px;
+    }
+    .btn-cta-primary {
+        background-color: white;
+        color: #003366;
+        border: none;
+    }
+    .btn-cta-primary:hover {
+        background-color: #f0f0f0;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    .btn-cta-outline {
+        background-color: transparent;
+        color: white;
+        border: 2px solid white;
+    }
+    .btn-cta-outline:hover {
+        background-color: rgba(255,255,255,0.1);
+        transform: translateY(-3px);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container hero-content">
+        <div class="row align-items-center">
+            <div class="col-lg-7">
+                <h1 class="hero-title">Banking Reimagined for Your Future</h1>
+                <p class="hero-subtitle">Experience the next generation of digital banking with Kodbank. Secure transactions, intelligent insights, and personalized financial solutions all in one place.</p>
+                <div class="d-flex justify-content-start">
+                    <a href="{{ url_for('register') }}" class="btn btn-hero btn-hero-primary me-3">Register</a>
+                    <a href="{{ url_for('login') }}" class="btn btn-hero btn-hero-outline">Sign In</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="container py-5" style="margin-top: 60px; margin-bottom: 80px;">
+    <div class="text-center mb-5">
+        <h2 class="section-title">Why Choose Kodbank?</h2>
+        <p class="section-subtitle">We offer innovative banking solutions designed to meet your financial needs with security, convenience, and personalized service.</p>
+    </div>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card feature-card">
+                <div class="card-body p-4 text-center">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-graph-up-arrow" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M1 9.5a.5.5 0 0 1 .5-.5h3.797L1 11.797V14.5a.5.5 0 0 1-1 0v-5a.5.5 0 0 1 .5-.5zm11 0a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v5a.5.5 0 0 1-1 0v-2.707L9.707 10.5a.5.5 0 0 1 0-.707l4-4a.5.5 0 0 1 .707 0l2.5 2.5a.5.5 0 0 1 0 .707l-1.5 1.5a.5.5 0 0 1-.707 0l-1.5-1.5a.5.5 0 0 1 0-.707l1.146-1.146L11 9.207V9.5z"/>
+                        </svg>
+                    </div>
+                    <h4 class="feature-title">Competitive Rates</h4>
+                    <p class="feature-text">Enjoy some of the best interest rates in the market on your savings and investments.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card feature-card">
+                <div class="card-body p-4 text-center">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-shield-lock" viewBox="0 0 16 16">
+                            <path d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.287 2.233c.346.244.652.42.893.533.12.057.218.095.293.118a.55.55 0 0 0 .101.025.615.615 0 0 0 .1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM5.072.56C6.157.265 7.31 0 8 0s1.843.265 2.928.56c1.11.3 2.229.655 2.887.87a1.54 1.54 0 0 1 1.044 1.262c.596 4.477-.787 7.795-2.465 9.99a11.775 11.775 0 0 1-2.517 2.453 7.159 7.159 0 0 1-1.048.625c-.28.132-.581.24-.829.24s-.548-.108-.829-.24a7.158 7.158 0 0 1-1.048-.625 11.777 11.777 0 0 1-2.517-2.453C1.928 10.487.545 7.169 1.141 2.692A1.54 1.54 0 0 1 2.185 1.43 62.456 62.456 0 0 1 5.072.56z"/>
+                            <path d="M9.5 6.5a.5.5 0 0 0-1 0V8a.5.5 0 0 0 .452.498l2.5.5a.5.5 0 0 0 .196-.98l-2.148-.43V6.5z"/>
+                            <path d="M8 4.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm0 1a.5.5 0 1 1 0 1 .5.5 0 0 1 0-1z"/>
+                        </svg>
+                    </div>
+                    <h4 class="feature-title">Secure Banking</h4>
+                    <p class="feature-text">Bank with confidence using our advanced security features and encryption technology.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card feature-card">
+                <div class="card-body p-4 text-center">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-clock-history" viewBox="0 0 16 16">
+                            <path d="M8.515 1.019A7 7 0 0 0 8 1V0a8 8 0 0 1 .589.022l-.074.997zm2.004.45a7.003 7.003 0 0 0-.985-.299l.219-.976c.383.086.76.2 1.126.342l-.36.933zm1.37.71a7.01 7.01 0 0 0-.439-.27l.493-.87a8.025 8.025 0 0 1 .979.654l-.615.789a6.996 6.996 0 0 0-.418-.302zm1.834 1.79a6.99 6.99 0 0 0-.653-.796l.724-.69c.27.285.52.59.747.91l-.818.576zm.744 1.352a7.08 7.08 0 0 0-.214-.468l.893-.45a7.976 7.976 0 0 1 .45 1.088l-.95.313a7.023 7.023 0 0 0-.179-.483zm.53 2.507a6.991 6.991 0 0 0-.1-1.025l.985-.17c.067.386.106.778.116 1.17l-1 .025zm-.131 1.538c.033-.17.06-.339.081-.51l.993.123a7.957 7.957 0 0 1-.23 1.155l-.964-.267c.046-.165.086-.332.12-.501zm-.325 1.541a6.994 6.994 0 0 0-.245-.512l.878-.531c.178.295.336.6.468.912l-.896.429a6.978 6.978 0 0 0-.205-.298zm-.496 1.439a6.99 6.99 0 0 0-.353-.448l.814-.58c.22.31.418.634.589.97l-.846.419a6.96 6.96 0 0 0-.204-.36zm-.674 1.229a7.01 7.01 0 0 0-.434-.376l.714-.699c.254.259.488.534.698.822l-.708.443a6.98 6.98 0 0 0-.27-.19zm-.778.88a7.016 7.016 0 0 0-.484-.29l.604-.797c.268.203.525.421.767.65l-.558.719a6.979 6.979 0 0 0-.329-.182zm-.78.533a6.988 6.988 0 0 0-.506-.197l.474-.88c.23.124.455.259.673.405l-.487.739a6.952 6.952 0 0 0-.154-.067z"/>
+                            <path d="M14 0a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12zm0 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1z"/>
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3.5h3.5a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5v-4a.5.5 0 0 1 .5-.5z"/>
+                        </svg>
+                    </div>
+                    <h4 class="feature-title">24/7 Access</h4>
+                    <p class="feature-text">Access your accounts anytime, anywhere through our secure online banking platform.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card feature-card">
+                <div class="card-body p-4 text-center">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-phone" viewBox="0 0 16 16">
+                            <path d="M11 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h6zM5 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H5z"/>
+                            <path d="M8 14a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                        </svg>
+                    </div>
+                    <h4 class="feature-title">Digital Banking</h4>
+                    <p class="feature-text">Manage your finances with our innovative digital banking solutions and mobile app.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card feature-card">
+                <div class="card-body p-4 text-center">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-people" viewBox="0 0 16 16">
+                            <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+                        </svg>
+                    </div>
+                    <h4 class="feature-title">Personal Service</h4>
+                    <p class="feature-text">Experience personalized banking with dedicated relationship managers.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card feature-card">
+                <div class="card-body p-4 text-center">
+                    <div class="feature-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" class="bi bi-globe" viewBox="0 0 16 16">
+                            <path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm7.5-6.923c-.67.204-1.335.82-1.887 1.855A7.97 7.97 0 0 0 5.145 4H7.5V1.077zM4.09 4a9.267 9.267 0 0 1 .64-1.539 6.7 6.7 0 0 1 .597-.933A7.025 7.025 0 0 0 2.255 4H4.09zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a6.958 6.958 0 0 0-.656 2.5h2.49zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5H4.847zM8.5 5v2.5h2.99a12.495 12.495 0 0 0-.337-2.5H8.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5H4.51zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5H8.5zM5.145 12c.138.386.295.744.468 1.068.552 1.035 1.218 1.65 1.887 1.855V12H5.145zm.182 2.472a6.696 6.696 0 0 1-.597-.933A9.268 9.268 0 0 1 4.09 12H2.255a7.024 7.024 0 0 0 3.072 2.472zM3.82 11a13.652 13.652 0 0 1-.312-2.5h-2.49c.062.89.291 1.733.656 2.5H3.82zm6.853 3.472A7.024 7.024 0 0 0 13.745 12H11.91a9.27 9.27 0 0 1-.64 1.539 6.688 6.688 0 0 1-.597.933zM8.5 12v2.923c.67-.204 1.335-.82 1.887-1.855.173-.324.33-.682.468-1.068H8.5zm3.68-1h2.146c.365-.767.594-1.61.656-2.5h-2.49a13.65 13.65 0 0 1-.312 2.5zm2.802-3.5a6.959 6.959 0 0 0-.656-2.5H12.18c.174.782.282 1.623.312 2.5h2.49zM11.27 2.461c.247.464.462.98.64 1.539h1.835a7.024 7.024 0 0 0-3.072-2.472c.218.284.418.598.597.933zM10.855 4a7.966 7.966 0 0 0-.468-1.068C9.835 1.897 9.17 1.282 8.5 1.077V4h2.355z"/>
+                        </svg>
+                    </div>
+                    <h4 class="feature-title">Global Reach</h4>
+                    <p class="feature-text">Access your funds worldwide with our extensive network of branches and ATMs.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title text-white">Our Impact in Numbers</h2>
+            <p class="section-subtitle text-white-50">We're proud of our achievements and the trust our customers place in us every day.</p>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-card">
+                    <div class="stat-number">2M+</div>
+                    <div class="stat-label">Happy Customers</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-card">
+                    <div class="stat-number">500+</div>
+                    <div class="stat-label">Branches Nationwide</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Customer Support</div>
+                </div>
+            </div>
+            <div class="col-md-3 col-6 mb-4">
+                <div class="stat-card">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Years of Trust</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+
+
+{% endblock %}
